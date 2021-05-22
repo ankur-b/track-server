@@ -2,7 +2,8 @@ const express = require("express")
 const mongoose = require("mongoose")
 const authRoutes = require("./routes/authRoutes")
 const bodyParser = require("body-parser")
-const mongodbUri = require("./db")
+const mongodbUri = require("./utils/db")
+const requireAuth = require("./middlewares/requireAuth")
 
 const app =  express()
 app.use(bodyParser.json())
@@ -21,8 +22,8 @@ mongoose.connection.on('error',(err)=>{
     console.log('Error connecting to mongo',err);
 })
 
-app.get("/",(req,res)=>{
-    res.send("Hi There!");
+app.get("/", requireAuth,(req,res)=>{
+    res.send(`Your email: ${req.user.email}`);
 })
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
