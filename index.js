@@ -19,6 +19,7 @@ mongoose.connection.on('connected',()=>{
 })
 
 mongoose.connection.on('error',(err)=>{
+    console.log("errr",mongodbUri)
     console.log('Error connecting to mongo',err);
 })
 
